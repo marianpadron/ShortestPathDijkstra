@@ -169,18 +169,28 @@ void print_path(int* previous, int from_index, int to_index) {
 * Prints the shortest path found between vertices to the user.
 */
 void print_shortest_path(int from_index, int to_index, AdjMatrix* matrix, int* prev) {
-    // Print to user
+    
     int path[matrix -> size];
     int path_len = 0;
     int curr = to_index;
+
+    // Print if path not found
+    if(prev[curr] == -1) {
+        fprintf(stderr, "Path Not Found.\n");
+        return;
+    }
+
+    // Iterate through prev indexes to find path to to_index
+    printf("Path was found...\n");
     while(curr != -1) {
         path[path_len] = curr;
         path_len++;
         curr = prev[curr];
     }
 
+    // Go through index list
     for (int i = path_len - 1; i >= 0; i--) {
-        printf("%s ", matrix -> vertices[i]);
+        printf("%s\n", matrix -> vertices[path[i]]);
     }
     printf("\n");
 
@@ -191,11 +201,6 @@ void print_shortest_path(int from_index, int to_index, AdjMatrix* matrix, int* p
 * Returns -1 if unable to find path.
 */
 int shortest_path(int from_index, int to_index, AdjMatrix* matrix) {
-    // // Find city indexes
-    // int from_index = find_index(from_city, matrix);
-    // int to_index = find_index(to_city, matrix);
-    printf("from index %d; to index %d\n",from_index, to_index);
-
     // Initialize arrays for algorithm
     int visited [matrix -> size];
     int prev [matrix -> size];
@@ -218,18 +223,12 @@ int shortest_path(int from_index, int to_index, AdjMatrix* matrix) {
         int min_index = -1;
         for (int j = 0; j < matrix -> size; j++) {
             if(visited[j] == 0 && dist[j] < min_dist) {
-                printf("not visited and dis less than min\n");
                 min_dist = dist[j];
                 min_index = j;
-                printf("mindist %d; min index %d\n", min_dist, min_index);
             }
         }
 
-        printf("MIN INDEX %d\n", min_index);
-        if (min_index == -1) {
-            printf("No path was found.\n");
-            return -1;
-        }
+        if (min_dist == INT_MAX) break;
 
         visited[min_index] = 1;
 
@@ -237,7 +236,7 @@ int shortest_path(int from_index, int to_index, AdjMatrix* matrix) {
         for (int j = 0; j < matrix -> size; j++) {
             if (matrix -> data[min_index][j] != 0) {
                 int other_dist = dist[min_index] + matrix -> data[min_index][j];
-                if (other_dist < dist[j]) {
+                if (visited[j] == 0 && other_dist < dist[j]) {
                     dist[j] = other_dist;
                     prev[j] = min_index;
                 }
@@ -245,7 +244,6 @@ int shortest_path(int from_index, int to_index, AdjMatrix* matrix) {
         }
     }
 
-    printf("Path was found...\n");
     // Print shortest path to user
     print_shortest_path(from_index, to_index, matrix, prev);
     return dist[to_index];
@@ -284,7 +282,7 @@ int main(int argc, char const *argv[]) {
     // Get user commands
     while (1) {
         // Get input
-        printf("Where do you want to go today?\n");
+        printf("Where do you want to go today? ");
         char input[MAX_LENGTH];
         fgets(input, MAX_LENGTH, stdin);
         char* from_city = strtok(input, " \n");
@@ -323,22 +321,11 @@ int main(int argc, char const *argv[]) {
             // If valid find shortest path
             } else {
                 int length = shortest_path(from_index, to_index, matrix);
-                printf("The shortest path between %s and %s is:\n", from_city, to_city);
-                printf("Total length of %d.\n", length);
-            break;
+                if (length != INT_MAX) printf("Total Distance: %d.\n", length);
             }
-
         }
-        
     }
-
-
-
     
-    //for (int i = 0; i < size; i++) printf("%s\n", matrix->vertices[i]);
-
-    
-
     free_matrix(matrix);
 
 }
