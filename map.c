@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <limits.h>
 #include "adj_matrix.c"
 
 
@@ -155,6 +156,102 @@ void print_vertices(AdjMatrix* matrix) {
     }
 }
 
+void print_path(int* previous, int from_index, int to_index) {
+    if (previous[to_index] == -1) {
+        printf("%d", to_index);
+        return;
+    }
+    print_path(previous, from_index, previous[to_index]);
+    printf(" -> %d", to_index);
+}
+
+/**
+* Prints the shortest path found between vertices to the user.
+*/
+void print_shortest_path(int from_index, int to_index, AdjMatrix* matrix, int* prev) {
+    // Print to user
+    int path[matrix -> size];
+    int path_len = 0;
+    int curr = to_index;
+    while(curr != -1) {
+        path[path_len] = curr;
+        path_len++;
+        curr = prev[curr];
+    }
+
+    for (int i = path_len - 1; i >= 0; i--) {
+        printf("%s ", matrix -> vertices[i]);
+    }
+    printf("\n");
+
+}
+
+/**
+* Finds the shortest path given two vetices and a adjacency matrix.
+* Returns -1 if unable to find path.
+*/
+int shortest_path(int from_index, int to_index, AdjMatrix* matrix) {
+    // // Find city indexes
+    // int from_index = find_index(from_city, matrix);
+    // int to_index = find_index(to_city, matrix);
+    printf("from index %d; to index %d\n",from_index, to_index);
+
+    // Initialize arrays for algorithm
+    int visited [matrix -> size];
+    int prev [matrix -> size];
+    int dist [matrix -> size];
+
+    // Give place holder values
+    for(int i = 0; i < matrix -> size; i++) {
+        visited[i] = 0;
+        prev[i] = -1;
+        dist[i] = INT_MAX;
+    }
+
+    // Set distance of current location to 0
+    dist[from_index] = 0;
+
+    // Find shortest path 
+    for (int i = 0; i < matrix -> size; i++) {
+        // Find vertex with minimum distance
+        int min_dist = INT_MAX;
+        int min_index = -1;
+        for (int j = 0; j < matrix -> size; j++) {
+            if(visited[j] == 0 && dist[j] < min_dist) {
+                printf("not visited and dis less than min\n");
+                min_dist = dist[j];
+                min_index = j;
+                printf("mindist %d; min index %d\n", min_dist, min_index);
+            }
+        }
+
+        printf("MIN INDEX %d\n", min_index);
+        if (min_index == -1) {
+            printf("No path was found.\n");
+            return -1;
+        }
+
+        visited[min_index] = 1;
+
+        // Update distances
+        for (int j = 0; j < matrix -> size; j++) {
+            if (matrix -> data[min_index][j] != 0) {
+                int other_dist = dist[min_index] + matrix -> data[min_index][j];
+                if (other_dist < dist[j]) {
+                    dist[j] = other_dist;
+                    prev[j] = min_index;
+                }
+            }
+        }
+    }
+
+    printf("Path was found...\n");
+    // Print shortest path to user
+    print_shortest_path(from_index, to_index, matrix, prev);
+    return dist[to_index];
+
+}
+
 /**
 * Main to run shortest distance program.
 */
@@ -177,6 +274,7 @@ int main(int argc, char const *argv[]) {
     add_vertices(vertices_file, matrix);
     add_distances(distances_file, matrix);
     //printf("%d\n", find_index("b", matrix));
+    print_matrix(matrix);
 
     // Initialize splash
     printf("******* Welcome to the shortest path finder! *******\n");
@@ -189,35 +287,54 @@ int main(int argc, char const *argv[]) {
         printf("Where do you want to go today?\n");
         char input[MAX_LENGTH];
         fgets(input, MAX_LENGTH, stdin);
-
-        // Check commands
         char* from_city = strtok(input, " \n");
         char* to_city = strtok(NULL, " \n");
-        printf("%s\n", from_city);
-        printf("%s\n", to_city);
 
+        // Loop through commands
+        // Exit
         if(strcmp(from_city, "exit") == 0) {
             printf("You have exited. Goodbye!\n");
             break;
+        
+        // List
         } else if (strcmp(from_city, "list") == 0) {
             printf("Available cities: \n");
             print_vertices(matrix);
+
+        // Help
         } else if (strcmp(from_city, "help") == 0) {
             print_commands();
+
+        // If empty
         } else if (from_city == NULL || to_city == NULL) {
             printf("Invalid Command\n");
             print_commands();
-        } else if (find_index(from_city, matrix) == -1 || find_index(to_city, matrix) == -1) {
-            printf("Invalid cities\n");
+
+        // If provides two cities
         } else {
-            // Find shortest path
+            // Find city indexes
+            int from_index = find_index(from_city, matrix);
+            int to_index = find_index(to_city, matrix);
+
+            // Check valid cities
+            if (from_index == -1 || to_index == -1) {
+                printf("Invalid cities\n");
+
+            // If valid find shortest path
+            } else {
+                int length = shortest_path(from_index, to_index, matrix);
+                printf("The shortest path between %s and %s is:\n", from_city, to_city);
+                printf("Total length of %d.\n", length);
+            break;
+            }
+
         }
         
     }
 
 
 
-    //print_matrix(matrix);
+    
     //for (int i = 0; i < size; i++) printf("%s\n", matrix->vertices[i]);
 
     

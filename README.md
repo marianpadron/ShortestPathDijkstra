@@ -1,10 +1,10 @@
 # Finding The Shortest Distance
 
-Name:
+Name: Marian Padron
 
-Github Account name: 
+Github Account name: mpadron-neu
 
-Link to your repository:
+Link to your repository: https://github.com/Spring23-CS5008-BOS-Lionelle/homework-11-mpadron-neu.git
 
 How many hours did it take you to complete this assignment (estimate)? 
 
@@ -13,7 +13,9 @@ Did you collaborate with any other students/TAs/Professors? If so, tell us who a
 
 
 Did you use any external resources (you do not have to cite in class material)? (Cite them below)  
-- one row per resource
+- read lines of file : https://www.cppbuzz.com/program-to-read-text-file-line-by-line-in-c
+- split string into tokens : https://www.codingame.com/playgrounds/14213/how-to-play-with-strings-in-c/string-split#:~:text=To%20split%20a%20string%20we,words%20are%20separated%20by%20space.
+- dijkstra shortest path algo : https://www.thecrazyprogrammer.com/2014/03/dijkstra-algorithm-for-finding-shortest-path-of-a-graph.html
 
 
 (Optional) What was your favorite part of the assignment? 
