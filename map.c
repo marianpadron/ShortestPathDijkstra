@@ -136,6 +136,26 @@ void add_distances(const char* distances_file, AdjMatrix* matrix) {
 }
 
 /**
+* Prints valid commands to user.
+*/
+void print_commands() {
+    printf("Commands:\n");
+    printf("\tlist - list all cities\n");
+    printf("\t<city1> <city2> - find the shortest path between two cities\n");
+    printf("\thelp - print this help message\n");
+    printf("\texit - exit the program\n");
+}
+
+/**
+* Prints vertices in matrix -> vertices to user.
+*/
+void print_vertices(AdjMatrix* matrix) {
+    for (int i = 0; i < matrix -> size; i++) {
+        printf("%s\n", matrix -> vertices[i]);
+    }
+}
+
+/**
 * Main to run shortest distance program.
 */
 int main(int argc, char const *argv[]) {
@@ -145,7 +165,7 @@ int main(int argc, char const *argv[]) {
         return 1;
     }
 
-    // Read files
+    // Hold files
     const char* vertices_file = argv[1]; 
     const char* distances_file = argv[2];
 
@@ -158,9 +178,46 @@ int main(int argc, char const *argv[]) {
     add_distances(distances_file, matrix);
     //printf("%d\n", find_index("b", matrix));
 
+    // Initialize splash
+    printf("******* Welcome to the shortest path finder! *******\n");
+    print_commands();
+    printf("********************************************************\n");
+
+    // Get user commands
+    while (1) {
+        // Get input
+        printf("Where do you want to go today?\n");
+        char input[MAX_LENGTH];
+        fgets(input, MAX_LENGTH, stdin);
+
+        // Check commands
+        char* from_city = strtok(input, " \n");
+        char* to_city = strtok(NULL, " \n");
+        printf("%s\n", from_city);
+        printf("%s\n", to_city);
+
+        if(strcmp(from_city, "exit") == 0) {
+            printf("You have exited. Goodbye!\n");
+            break;
+        } else if (strcmp(from_city, "list") == 0) {
+            printf("Available cities: \n");
+            print_vertices(matrix);
+        } else if (strcmp(from_city, "help") == 0) {
+            print_commands();
+        } else if (from_city == NULL || to_city == NULL) {
+            printf("Invalid Command\n");
+            print_commands();
+        } else if (find_index(from_city, matrix) == -1 || find_index(to_city, matrix) == -1) {
+            printf("Invalid cities\n");
+        } else {
+            // Find shortest path
+        }
+        
+    }
 
 
-    print_matrix(matrix);
+
+    //print_matrix(matrix);
     //for (int i = 0; i < size; i++) printf("%s\n", matrix->vertices[i]);
 
     
