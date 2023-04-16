@@ -16,28 +16,6 @@
 #define MAX_VERTICES 100
 #define MAX_LENGTH 256
 
-
-void add_vertices(const char* vertices_file, AdjMatrix* matrix) {
-    // Open file
-    FILE *file = fopen(vertices_file, "r");
-    if (file == NULL) {
-        printf("Error opening vertices file.\n");
-        return;
-    }
-
-    char buffer[MAX_LENGTH];
-    int num_lines = 0;
-
-    while (fgets(buffer, MAX_LENGTH, file) != NULL) {
-        strcpy(matrix -> vertices[num_lines], buffer); // copy line to array
-        num_lines++;
-    }
-    
-    for(int i = 0; i < matrix -> size; i++) printf("%s\n", matrix->vertices[i]);
-    fclose(file);
-
-}
-
 /**
 * Counts how many vertices are within the vertices file to get the size of the array.
 */
@@ -73,6 +51,91 @@ int count_vertices(const char* vertices_file) {
 }
 
 /**
+* Reads vertices files and adds vertices into matrix vertices array.
+*/
+void add_vertices(const char* vertices_file, AdjMatrix* matrix) {
+    // Open file
+    FILE *file = fopen(vertices_file, "r");
+    if (file == NULL) {
+        printf("Error opening vertices file.\n");
+        return;
+    }
+
+    char buffer[MAX_LENGTH];
+    int num_lines = 0;
+
+    while (fgets(buffer, MAX_LENGTH, file) != NULL) {
+        // Remove new line char
+        buffer[strcspn(buffer, "\n")] = '\0';
+        // Copy string to vertices array and null-terminate it
+        strncpy(matrix->vertices[num_lines], buffer, MAX_LENGTH - 1);
+        matrix->vertices[num_lines][MAX_LENGTH - 1] = '\0';
+        num_lines++;
+    }
+    
+    //for(int i = 0; i < matrix -> size; i++) printf("%s\n", matrix->vertices[i]);
+    fclose(file);
+
+}
+
+/**
+* Finds the index of a vertex within the matrix vertices array.
+*/
+int find_index(char* vertex, AdjMatrix* matrix) {
+    for (int i = 0; i < matrix -> size; i++) {
+        if(strcmp(vertex, matrix -> vertices[i]) == 0) {
+            return i;
+        }
+    }
+    printf("Vertex was not found.\n");
+    return -1;
+
+}
+
+/**
+* Reads distances file and adds distances to adjacency matrix.
+*/
+void add_distances(const char* distances_file, AdjMatrix* matrix) {
+     // Open file
+    FILE *file = fopen(distances_file, "r");
+    if (file == NULL) {
+        printf("Error opening distances file.\n");
+        return;
+    }
+
+    char buffer[MAX_LENGTH];
+    //int num_lines = 0;
+
+    while (fgets(buffer, MAX_LENGTH, file) != NULL) {
+        // Initialize varibles for cities and distance
+        char from_city[MAX_LENGTH];
+        char to_city[MAX_LENGTH];
+        int distance;
+        
+        // Get index locations for the cities
+        if (sscanf(buffer, "%s %s %d", from_city, to_city, &distance) == 3) {
+            int from_index = find_index(from_city, matrix);
+            int to_index = find_index(to_city, matrix);
+
+            // If found valid index for both add to adjacency matrix
+            if (from_index != -1 && to_index != -1) {
+                matrix -> data[from_index][to_index] = distance;
+                matrix -> data[to_index][from_index] = distance;
+            }
+        }
+        // // Remove new line char
+        // buffer[strcspn(buffer, "\n")] = '\0';
+        // // Copy string to vertices array and null-terminate it
+        // strncpy(matrix->vertices[num_lines], buffer, MAX_LENGTH - 1);
+        // matrix->vertices[num_lines][MAX_LENGTH - 1] = '\0';
+        // num_lines++;
+    }
+    
+    //for(int i = 0; i < matrix -> size; i++) printf("%s\n", matrix->vertices[i]);
+    fclose(file);
+}
+
+/**
 * Main to run shortest distance program.
 */
 int main(int argc, char const *argv[]) {
@@ -92,10 +155,12 @@ int main(int argc, char const *argv[]) {
     // Create matrix
     AdjMatrix* matrix = blank_matrix(size);
     add_vertices(vertices_file, matrix);
+    add_distances(distances_file, matrix);
+    //printf("%d\n", find_index("b", matrix));
 
 
 
-    //print_matrix(matrix);
+    print_matrix(matrix);
     //for (int i = 0; i < size; i++) printf("%s\n", matrix->vertices[i]);
 
     
