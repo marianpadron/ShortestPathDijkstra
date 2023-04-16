@@ -11,9 +11,6 @@
 #include <limits.h>
 #include "adj_matrix.c"
 
-
-#define MAX_VERTICES 100
-#define MAX_LENGTH 256
 #define MAX_VERTICES 100
 #define MAX_LENGTH 256
 
