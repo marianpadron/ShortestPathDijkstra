@@ -1,9 +1,11 @@
 ## Finding The Shortest Distance
-This program was developed as an assignment for a **DATA STRUCTURES** and **ALGORITHMS** class. It is a Dijkstra's shortest-path application that takes in a list of cities, a list of distances between cities, and then starts an interactive application. The program will ask the user for two cities, and then return the shortest distance between those two cities. It will continue until they type exit.
+This program was developed as an assignment for a **DATA STRUCTURES** and **ALGORITHMS** class. It is a **C** application that finds the shortest path between cities by implementing an adjacency matrix representation of a graph, and utilizing Dijkstra's shortest-path algorithm.
 
 <p align="center">
 <img title="Map" src="map1.png" width="60%">
 </p>
+
+The application takes in a list of cities, a list of distances between cities, and then starts an interactive application. The program will ask the user for two cities, and then return the shortest distance between those two cities. It will continue until they type exit.
 
 ### Guidelines
 The client will provide a list of cities/vertices and a list of distances between cities as a command line argument.
