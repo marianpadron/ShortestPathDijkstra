@@ -2,7 +2,7 @@
 This program was developed as an assignment for a **DATA STRUCTURES** and **ALGORITHMS** class. It is a Dijkstra's shortest-path application that takes in a list of cities, a list of distances between cities, and then starts an interactive application. The program will ask the user for two cities, and then return the shortest distance between those two cities. It will continue until they type exit.
 
 <p align="center">
-<img title="Map" src="map.png" width="40%">
+<img title="Map" src="map1.png" width="45%">
 </p>
 
 ### Guidelines
