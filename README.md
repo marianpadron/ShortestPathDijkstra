@@ -1,32 +1,22 @@
 # Finding The Shortest Distance
+This program was developed as an assignment for a **DATA STRUCTURES** and **ALGORITHMS** class. It is a Dijkstra's shortest-path application that takes in a list of cities, a list of distances between cities, and then starts an interactive application. The program will ask the user for two cities, and then return the shortest distance between those two cities. It will continue until they type exit.
 
-Name: Marian Padron
+### Guidelines
+The client will provide a list of cities/vertices and a list of distances between cities as a command line argument.
+- Usage: ./map.out <vertices> <distances>
 
-Github Account name: mpadron-neu
+After the information is loaded, the application will ask: Where do you want to go today?
+They will have the following options for input:
+-	list: list all cities
+-	<city1> <city2> - find the shortest path between two cities
+-	help - print this help message
+-	exit - exit the program
+When two cities are entered the application will print the shortest path from city one to city two, and the total distance.
+If there is no path, it will print "Path Not Found..."
 
-Link to your repository: https://github.com/Spring23-CS5008-BOS-Lionelle/homework-11-mpadron-neu.git
+Example input files provided in [inputs](/inputs)
 
-How many hours did it take you to complete this assignment (estimate)? 10 hrs
-
-Did you collaborate with any other students/TAs/Professors? If so, tell us who and in what capacity.  
-- one per row, add more if needed
-
-
-Did you use any external resources (you do not have to cite in class material)? (Cite them below)  
-- read lines of file : https://www.cppbuzz.com/program-to-read-text-file-line-by-line-in-c
-- split string into tokens : https://www.codingame.com/playgrounds/14213/how-to-play-with-strings-in-c/string-split#:~:text=To%20split%20a%20string%20we,words%20are%20separated%20by%20space.
-- dijkstra shortest path algo : https://www.thecrazyprogrammer.com/2014/03/dijkstra-algorithm-for-finding-shortest-path-of-a-graph.html
-- directed vs undirected : https://www.baeldung.com/cs/graphs-directed-vs-undirected-graph
-- Big O of adj matrix vs list : https://www.scaler.com/topics/data-structures/dijkstra-algorithm/
-- NP problems : https://news.mit.edu/2009/explainer-pnp
-- TSP : https://www.upperinc.com/guides/travelling-salesman-problem/
-
-
-(Optional) What was your favorite part of the assignment? 
-
-(Optional) How would you improve the assignment? 
-
-## Further Thinking Questions 
+## Assignment Further Thinking Questions 
 
 1. What is the difference between a directed and undirected graph?
 
@@ -68,8 +58,3 @@ Did you use any external resources (you do not have to cite in class material)? 
       - Delivery and supply chain management in solving the most efficient way to deliver goods to various locations
       - Planning routes for public transit systems
       - Network design, such as finding the shortest path for data packets to travel through a network
-
-
-
----
-Note: we are having you explore TSP, so you can see the terms used for problem classification that you will also explore in more depth in 5800. You will not be asked to know about TSP outside of this assignment or even problem classification. Computer Science is often about dealing with problems considered "too hard" or "impossible", and finding ways to make them possible! As such, knowing topics such as N, NP, NP-Complete, etc. is important to understand the limits (to break).
