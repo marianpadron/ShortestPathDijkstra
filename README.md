@@ -1,5 +1,9 @@
-# Finding The Shortest Distance
+## Finding The Shortest Distance
 This program was developed as an assignment for a **DATA STRUCTURES** and **ALGORITHMS** class. It is a Dijkstra's shortest-path application that takes in a list of cities, a list of distances between cities, and then starts an interactive application. The program will ask the user for two cities, and then return the shortest distance between those two cities. It will continue until they type exit.
+
+<p align="center">
+<img title="Map" src="map.png" width="40%">
+</p>
 
 ### Guidelines
 The client will provide a list of cities/vertices and a list of distances between cities as a command line argument.
@@ -8,15 +12,16 @@ The client will provide a list of cities/vertices and a list of distances betwee
 After the information is loaded, the application will ask: Where do you want to go today?
 They will have the following options for input:
 -	list: list all cities
--	<city1> <city2> - find the shortest path between two cities
--	help - print this help message
--	exit - exit the program
+-	< city1 > < city2 >: finds the shortest path between two cities
+-	help: print this help message
+-	exit: exit the program
+  
 When two cities are entered the application will print the shortest path from city one to city two, and the total distance.
 If there is no path, it will print "Path Not Found..."
 
-Example input files provided in [inputs](/inputs)
+Example input files provided in [inputs](/inputs).
 
-## Assignment Further Thinking Questions 
+### Assignment Questions 
 
 1. What is the difference between a directed and undirected graph?
 
