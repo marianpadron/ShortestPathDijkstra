@@ -1,5 +1,5 @@
 ## Finding The Shortest Distance
-This program was developed as an assignment for a **DATA STRUCTURES** and **ALGORITHMS** class. It is a **C** application that finds the shortest path between cities by implementing an adjacency matrix representation of a graph, and utilizing Dijkstra's shortest-path algorithm.
+This program was developed as an assignment for a **DATA STRUCTURES** and **ALGORITHMS** class. It is a **C** application that finds the shortest path between cities by implementing an adjacency matrix representation of a graph, and utilizing Dijkstra's shortest-path algorithm. 
 
 <p align="center">
 <img title="Map" src="map1.png" width="60%">
